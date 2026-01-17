@@ -11,3 +11,24 @@ The lab is specifically designed to align with the **National Cybersecurity Auth
 * **Networking:** VirtualBox Bridged Networking, TCP/IP, Port 1514
 * **Compliance:** Saudi NCA-ECC 2024 Framework
 * **Security Research:** Threat Hunting, Log Analysis, Attack Simulation
+## 🏗️ Technical Architecture
+
+The lab is architected to simulate a corporate DMZ and internal network segment. By utilizing a **Hub-and-Spoke** model, the Wazuh Manager acts as the central intelligence hub, receiving encrypted telemetry from distributed endpoints.
+
+### **Logical Network Map**
+```mermaid
+graph LR
+    subgraph "Internal Network (Victim Zone)"
+        WIN["🖥️ Windows 10 Enterprise<br/>(192.168.x.y)"]
+        SYSMON["⚙️ Sysmon Service<br/>(MITRE-Mapped)"]
+        WIN --- SYSMON
+    end
+
+    subgraph "Security Operations Zone (Monitoring)"
+        WAZUH["🛡️ Wazuh SIEM Server<br/>(192.168.x.x)"]
+        DASH["📊 Web Dashboard<br/>(Port 443)"]
+        WAZUH --- DASH
+    end
+
+    %% Encrypted Tunnel
+    SYSMON -- "Encrypted Logs (Port 1514)" --> WAZUH
