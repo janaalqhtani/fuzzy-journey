@@ -34,3 +34,8 @@ graph LR
 
     %% Encrypted Tunnel
     SYSMON -- "Encrypted Logs (Port 1514)" --> WAZUH
+## 🛡️ Attack Simulation & Detection Evidence
+
+To verify the effectiveness of the detection engine, I performed a series of controlled attack simulations. These simulations mimic real-world techniques used by adversaries to gain persistence and steal credentials.
+
+### **Test Case 1: Brute Force Attack (Authentication Failure)**
