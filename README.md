@@ -62,7 +62,7 @@ The attack was initiated via a PowerShell script that leveraged a loop to spawn 
 The **Wazuh Manager** successfully correlated the rapid succession of failed attempts. As seen in the telemetry, the pattern of multiple failures occurring in under 5 seconds distinguishes this as an automated script rather than a human error, triggering a priority alert.
 
 > **Forensic Evidence (Detection Summary):**
-> ![SIEM Detection Summary](images/brute-force-detection-summary.png)
+> ![SIEM Detection Summary](images/brute-force-detection-summary.png.png)
 > *Figure 2: Wazuh alerting on **Rule 60122** (Logon Failure) and **Rule 92037** (Network Connection).*
 
 **Phase 3: Forensic Deep Dive**
@@ -81,4 +81,11 @@ By analyzing the specific alert details, we can isolate the targeted account and
 | **Target User** | `SABIC_Hacker_Trial` | Confirms unauthorized account targeting |
 | **Alert Level** | 5 | Triggers initial SOC triage |
 
-**Mitigation Strategy:** Implementation of **Wazuh Active Response** to automatically block source IP addresses after a set threshold of consecutive authentication failures, in compliance with **NCA-ECC-3-1** response protocols.
+### **🛡️ Mitigation Strategy: Automated Active Response**
+
+To move from passive monitoring to proactive defense, the following mitigation strategy was implemented to align with **NCA-ECC-3-1** (Incident Management).
+
+* **The Solution:** Enabled **Wazuh Active Response** to provide real-time protection.
+* **The Action:** The system is configured to automatically block the source IP address at the firewall level once an attack pattern is confirmed.
+* **Trigger Threshold:** The block is activated after **5 failed login attempts within 60 seconds**, significantly reducing the window for a successful brute force.
+* **Business Value:** This automation reduces the **Mean Time to Respond (MTTR)** and ensures critical assets remain available by preventing resource exhaustion.
